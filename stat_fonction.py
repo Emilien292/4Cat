@@ -202,7 +202,7 @@ def main_stat(liste_pose_Candidat,chromosome,alphaFDR=0.01,QWR = 1,nb_meilleur_c
 	#data = np.asarray(data)
 	indexFenetre,Y = formatage_donnee(data)
 	regression_data = regression_monotone(Y,data)
-	print(len(indexFenetre))
+	#print(len(indexFenetre))
 	print("calcul du bruit de fond terminé")
 
 	ratio, delta = ratio_delta(regression_data,Y,data)
@@ -231,7 +231,7 @@ def main_stat(liste_pose_Candidat,chromosome,alphaFDR=0.01,QWR = 1,nb_meilleur_c
 			fichier.write("chromosome"+ "\t"+ "start"+ "\t" + "end" + "\t" + "pvalue" + "\t" +  "\t" +  "produit de rang" + "\n")
 			for i, pos  in enumerate(pos_candidat):
 				fichier.write(str(pos[0]) + "\t" +str(pos[1]) + "\t" + str(meilleur_pvalue[i]) + "\t" + str(produit_rang[i]) + "\n")
-			print("Fin de la recherche des pics" + "\n" +"Aucun pic significatif trouvé les "+str(nb_meilleur_candidat)+" meilleurs candidats non significatif seront donnés dans le fichier de sortie peak_non_significatif.txt dans le dossier resultats")
+			print("Fin de la recherche des pics" + "\n" +"Aucun pic significatif trouvé les "+str(nb_meilleur_candidat)+" meilleurs candidats non significatif seront donnés dans le fichier de sortie "+repertoire + "/" + basename + "_peak_non_significatif.txt dans le dossier resultats")
 	else:
 		taille_effet = filtre_effect_size(ratio,QWR)
 		significatif = list(set(taille_effet) & set(fdr_index_sinificatif))
@@ -244,7 +244,7 @@ def main_stat(liste_pose_Candidat,chromosome,alphaFDR=0.01,QWR = 1,nb_meilleur_c
 			for i, pos  in enumerate(significatif):
 				resultats.append([chromosome,indexFenetre[pos][0],indexFenetre[pos][1],fdr[pos],code])
 				fichier.write(chromosome+'\t'+str(indexFenetre[pos][0])+'\t'+str(indexFenetre[pos][1]) + "\t" + str(fdr[pos]) + "\t" + str(rank[1,pos]) + "\n")
-		print("Fin de la recherche des pics." +  "\n" +"les pics significatifs se trouvent dans le fichier peak_significatif.txt dans le dossier resultats")
+		print("Fin de la recherche des pics." +  "\n" +"les pics significatifs se trouvent dans le fichier " + repertoire + "/" + basename + "_peak_significatif.txt dans le dossier resultats")
 	return resultats
 
 #main_stat()

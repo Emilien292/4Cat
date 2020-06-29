@@ -203,7 +203,7 @@ def filterRead(fileBam,listeFenetreE1aE2,listeFenetreE1aE1,chrFilter,mapQ = 20,d
     return [listeFenetreE1aE2,listeFenetreE1aE1,chrFilter]
 
 def separeList(listeFenetre,cordSeparate):
-     """! Documentation pour la fonction separeList
+    """! Documentation pour la fonction separeList
         cette fonction prends en parametre une liste corespondant a un type de fragment et une liste,tuple de deux int qui corespond au viewpoint.
         Elle permettera de separer la liste en deux selon les cordonnées du viewpoint.
         @param cordSeparate une liste de 2 int debut et fin (ordre croissant)

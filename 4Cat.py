@@ -50,7 +50,7 @@ optional.add_argument('--createBedgraph',"-cBg", type=bool, default=False,
                     help="Crée pour chaque bam un bedgraph avec uniquement les read filtré")                    
 optional.add_argument('--repertoireBedgraph',"-rBg", type=str, default="resultats",
                     help="donne le repertoire de la création des bedgraph")  
-optional.add_argument('--cordinateViewpoint',"-cordVp", type=str,
+optional.add_argument('--cordinateViewpoint',"-cordVp", type=str, default="",
                     help="indique les cordonnées présuposer du viewpoint au format start-end ou uniquement une position")                 
 optional.add_argument('--allChrom',"-allChrom", type=bool, default = False,
                     help="indique si on souhaite analyser tous les chromosomes ou uniquement le chromosome du viewpoint")                 
@@ -77,7 +77,6 @@ repBigwig = args.repertoireBedgraph
 allChrom = args.allChrom
 nbpks = 2
 cordVp = args.cordinateViewpoint
-cordVp = "23044000"
 #######################################
 ###
 alphaFDR = args.alphaFdr
