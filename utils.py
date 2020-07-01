@@ -23,13 +23,37 @@ Documentation for this module.
 More details.
 """
 def createBedgraph(listeFenetre,numeroBam,basename,chrName, repertoire = "resultats"):
-    print(repertoire + "/" + basename)
+    """! Documentation pour la fonction createBedgraph
+        cette fonction construit un bedgraph provenant d'une liste de fenetre. la taille des fragments varies. Chaque fenetre est un fragment.
+        Dans le Cas d'un fichier existant. on ecrit a la suite du fichier. Cela permet d'eviter de mettre en memoire chaque liste de fenetre d'un chromosome.
+
+        @param listeFenetre une liste de fenetre
+        @param numeroBam int corespondant au numero du bam pour connaitre la valeur a utiliser dans la fenetre.
+        @param basename string choisissant le nom du fichier que l'on va crée
+        @param chrName string correspondant au nom du chromosome correspondant a la fenetre
+        @param repertoire string correspondant au repertoire ou le fichier va s'ecrire par defaut: resultats
+
+        @return pas de retour juste la création du fichier en mode ecriture "a"
+    """
+    #print(repertoire + "/" + basename)
     bg = open(repertoire + "/" + basename,"a")   
     for fenetre in listeFenetre[1:]:
         bg.write(chrName + '\t' + str(fenetre[0]) + '\t' + str(fenetre[1]) + '\t' +str(fenetre[1+numeroBam])+'\n')
     bg.close()
 
 def regroupFenetre(listeListeFenetre,pourcentage = 25, repertoire = "resultats",basename = "regroupsPeak.bed"):
+    """! Documentation pour la fonction regroupFenetre
+        cette fonction permet de créer a partir de toute les liste de fenetre un fichier bed regroupant les resultats en ajoutant le fdr moyen
+        pour chaque peak trouver et un code permettant de retrouver la type de fenetre d'ou provient le peak. le code est un int de 4 chiffre inspirer d'un code bianire correspondant a chaque type de fenetre.
+        1 présent 0 absent 
+
+        @param listeListeFenetre une liste de liste de fenetre.
+        @param pourcentage int corespondant au pourcentage de chevauchement entre 2 peak pour interpreter cela comme une intersection
+        @param basename string choisissant le nom du fichier que l'on va crée
+        @param repertoire string correspondant au repertoire ou le fichier va s'ecrire par defaut: resultats
+
+        @return pas de retour juste la création du fichier en mode ecriture "w"
+    """
     nouvelleFenetre = []
     chr = listeListeFenetre[0][0]
     
