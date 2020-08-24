@@ -1,8 +1,8 @@
 # 4Cat
-outils d'analyse de données 4C
+outils d'analyse de données 4C avec replicat
 
 ## Description
-L'outils permet actuellement uniquement de faire de la detection de peak à partir de bam triée avec son index sur tous les chromosomes (trans analyse) et spécifiquement le chromosome que l'on appelle le viewpoint. L'outils à comme but de laissez chaque personne insérer une méthode d'analyse statistique  
+L'outils permet actuellement uniquement de faire de la detection de peak à partir de au moins 2 bam (réplicats) triée avec son index sur tous les chromosomes (trans analyse) et spécifiquement le chromosome que l'on appelle le viewpoint. L'outils a été développer dans le but de laissez chaque personne insérer une méthode d'analyse statistique  
 
 ### L'architecture de l'outils. 
 L'outils est séparer en plusieurs script. Chaque script aura un but particulier.
@@ -19,7 +19,7 @@ L'outils est séparer en plusieurs script. Chaque script aura un but particulier
 l'outils utilise python >= 3.5 en utilisant les packages suivants:
 - joblib 0.12.0
 - matplotlib 3.0.3
-- rupture 1.4.5
+- ruptures 1.4.5
 - sklearn >= 0.0
 - numpy 1.18.5 >= 1.11.5
 - spicy >= 0.17.0 

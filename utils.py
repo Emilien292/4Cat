@@ -43,8 +43,8 @@ def createBedgraph(listeFenetre,numeroBam,basename,chrName, repertoire = "result
 
 def regroupFenetre(listeListeFenetre,pourcentage = 25, repertoire = "resultats",basename = "regroupsPeak.bed"):
     """! Documentation pour la fonction regroupFenetre
-        cette fonction permet de créer a partir de toute les liste de fenetre un fichier bed regroupant les resultats en ajoutant le fdr moyen
-        pour chaque peak trouver et un code permettant de retrouver la type de fenetre d'ou provient le peak. le code est un int de 4 chiffre inspirer d'un code bianire correspondant a chaque type de fenetre.
+        cette foanction permet de créer a partir de toute les liste de fenetre un fichier bed regroupant les resultats en ajoutant le fdr moyen
+        pour chque peak trouver et un code permettant de retrouver la type de fenetre d'ou provient le peak. le code est un int de 4 chiffre inspirer d'un code bianire correspondant a chaque type de fenetre.
         1 présent 0 absent 
 
         @param listeListeFenetre une liste de liste de fenetre.
