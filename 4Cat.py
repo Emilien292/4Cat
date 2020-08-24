@@ -34,6 +34,8 @@ required.add_argument("-e1",'--enzyme1', type=str,required=True,
                     help="Sequence de l'enzyme de restriction 1")
 required.add_argument("-e2",'--enzyme2', type=str,required=True, 
                     help="Sequence de l'enzyme de restriction 2")
+optional.add_argument('--repertoire',"-O", type=str, default="resultats",
+                    help="donne le repertoire où les resultats irons") 
 optional.add_argument('--alphaFdr',"-FDR", type=float, default=0.05,
                     help="Seuil de fdr en dessous duquel les pics seront considérés comme significatif (default 0.05) ")
 optional.add_argument('--nb_meilleur_candidat', type=float, default=5,
@@ -45,7 +47,7 @@ optional.add_argument('--mappingQuality',"-mapQ", type=float, default=20,
 optional.add_argument('--nbrConsecutif',"-nbrC", type=int, default=10,
                     help="définit le nombre de fragment de type E1 a E1 regrouper, ce parametre a une influence sur les regions rechercher")
 optional.add_argument('--maxDist',"-mD", type=int, default=5,
-                    help="définit la distance maximun de regroupement entre fragment de type E1 a E1, cela evite le regroupement de ffragment trop éloigner")                    
+                    help="définit la distance maximun de regroupement entre fragment de type E1 a E1, cela evite le regroupement de fragment trop éloigner")                    
 optional.add_argument('--createBedgraph',"-cBg", type=bool, default=False,
                     help="Crée pour chaque bam un bedgraph avec uniquement les read filtré")                    
 optional.add_argument('--repertoireBedgraph',"-rBg", type=str, default="resultats",
@@ -75,6 +77,7 @@ maxDist = args.maxDist
 bigWig = args.createBedgraph
 repBigwig = args.repertoireBedgraph
 allChrom = args.allChrom
+repertoire = args.repertoire
 nbpks = 2
 cordVp = args.cordinateViewpoint
 #######################################
@@ -125,16 +128,16 @@ for line in fileGenome:
             ListeFenetreE1aE1[1].reverse()
             ListeFenetreSeparer = [SepareInfluenceVp(ListeFenetreConsecutif[0]),SepareInfluenceVp(ListeFenetreConsecutif[1])]
             regroupListe = []
-            regroupListe += main_stat(ListeFenetreE1aE2ouE2aE1[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downE1aE2",code = 1)
-            regroupListe += main_stat(ListeFenetreE1aE2ouE2aE1[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upE1aE2",code = 1)
-            regroupListe += main_stat(ListeFenetreE1aE1[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downE1aE1",code = 10)
-            regroupListe += main_stat(ListeFenetreE1aE1[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upE1aE1",code = 10)
-            regroupListe += main_stat(ListeFenetreConsecutif[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downConsecutif",code = 100)
-            regroupListe += main_stat(ListeFenetreConsecutif[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upConsecutif",code = 100)
-            regroupListe += main_stat(ListeFenetreSeparer[0][-1],nomChroLocal,alphaFDR = alphaFDR,basename = "downSeparer",code = 1000)
-            regroupListe += main_stat(ListeFenetreSeparer[1][-1],nomChroLocal,alphaFDR = alphaFDR,basename = "upSeparer",code = 1000)
+            regroupListe += main_stat(ListeFenetreE1aE2ouE2aE1[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downE1aE2",code = 1,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreE1aE2ouE2aE1[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upE1aE2",code = 1,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreE1aE1[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downE1aE1",code = 10,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreE1aE1[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upE1aE1",code = 10,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreConsecutif[0],nomChroLocal,alphaFDR = alphaFDR,basename = "downConsecutif",code = 100,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreConsecutif[1],nomChroLocal,alphaFDR = alphaFDR,basename = "upConsecutif",code = 100,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreSeparer[0][-1],nomChroLocal,alphaFDR = alphaFDR,basename = "downSeparer",code = 1000,repertoire=repertoire)
+            regroupListe += main_stat(ListeFenetreSeparer[1][-1],nomChroLocal,alphaFDR = alphaFDR,basename = "upSeparer",code = 1000,repertoire=repertoire)
             regroupListe2 = sorted(regroupListe, key=lambda x: x[1])
-            regroupFenetre(regroupListe2)
+            regroupFenetre(regroupListe2,repertoire=repertoire)
             
             for i in range(nbpks):
                 detectionPeakZscore(ListeFenetreSeparer[1][i],nomChroLocal)
@@ -153,7 +156,7 @@ for line in fileGenome:
                     for i,bam in enumerate(listeBam):
                         createBedgraph(ListeFenetreE1aE2ouE2aE1,1+i,bam.split("/")[-1].split(".")[0]+".bedgraph",chrName)
                 if (len(ListeFenetreConsecutif)>=1):
-                    detectionPeakZscore(ListeFenetreConsecutif,nomChroLocal)
+                    detectionPeakZscore(ListeFenetreConsecutif,nomChroLocal,repertoire=repertoire)
             except:
                 print(nomChroLocal)
             #"analyse classique"
